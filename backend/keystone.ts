@@ -1,5 +1,7 @@
 import 'dotenv/config';
 import {config, createSchema} from '@keystone-next/keystone/schema';
+import {createAuth} from '@keystone-next/auth';
+import {withItemData, statelessSessions} from '@keystone-next/keystone/session';
 import {User} from './schemas/User';
 
 const databaseURL = process.env.DATABASE_URL || 'mongodb://localhost/keystone-ivy';
@@ -9,7 +11,17 @@ const sessionConfig = {
     secret: process.env.COOKIE_SECRET,
 }
 
-export default config({
+const { withAuth } = createAuth({
+    listKey: 'User',
+    identityField: 'email',
+    secretField: 'password',
+    initFirstItem: {
+        fields: ['name', 'email', 'password'],
+        //todo add initial roles here
+    }
+})
+
+export default withAuth(config({
     // @ts-ignore
     server: {
         cors: {
@@ -27,8 +39,12 @@ export default config({
         User
     }),
     ui: {
-        //Todo: chance this for roles
-        isAccessAllowed: () => true,
+        //show ui only for people who pass this test
+        isAccessAllowed: ({session}) =>
+        !!session?.data,
     },
     //TODO: add session values here
-});
+    session: withItemData(statelessSessions(sessionConfig), {
+        User: `id name email`
+    })
+}));
