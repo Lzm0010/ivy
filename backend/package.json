@@ -1,8 +1,8 @@
 {
-  "name": "sick-fits-backend",
-  "version": "2.0.0",
+  "name": "ivy-backend",
+  "version": "1.0.0",
   "private": true,
-  "author": "Wes Bos",
+  "author": "Lee Mac",
   "license": "MIT",
   "scripts": {
     "dev": "keystone-next",
@@ -71,5 +71,5 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "repository": "https://github.com/wesbos/advanced-react"
+  "repository": "https://github.com/lzm0010/ivy"
 }
