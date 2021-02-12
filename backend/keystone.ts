@@ -4,6 +4,7 @@ import {createAuth} from '@keystone-next/auth';
 import {withItemData, statelessSessions} from '@keystone-next/keystone/session';
 import {User} from './schemas/User';
 import {Product} from './schemas/Product';
+import {ProductImage} from './schemas/ProductImage';
 
 const databaseURL = process.env.DATABASE_URL || 'mongodb://localhost/keystone-ivy';
 
@@ -38,7 +39,8 @@ export default withAuth(config({
     lists: createSchema({
         //Schema items go here
         User,
-        Product
+        Product,
+        ProductImage,
     }),
     ui: {
         //show ui only for people who pass this test
